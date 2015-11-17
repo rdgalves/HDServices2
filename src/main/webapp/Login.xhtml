@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>HDServices - Sistema de gerenciamento de Chamados</title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+</h:head>
+<h:body id="corpo-login" align="center"
+	style="background-color: #F0FFFF">
+
+	<header>
+	<div id="logo" align="center">
+		<h:link>
+			<h:graphicImage library="images" name="logo-hdservices.png"
+				width="120" height="70" />
+		</h:link>
+	</div>
+	<div id="tituloFixo">
+		<h1 align="center" style="color: black">Sistema de gerenciamento
+			de Chamados</h1>
+	</div>
+	</header>
+
+	<p:dialog id="dialog" header="Login" visible="true" resizable="false"
+		minWidth="445" width="445" height="220" showEffect="explode"
+		position="center" modal="false" draggable="true" closable="false">
+
+		<p:growl id="growl" autoUpdate="true" showDetail="false" sticky="true" />
+
+		<div id="frmLogin">
+			<h:form align="left" method="post">
+
+				<p:ajaxStatus>
+					<f:facet name="start" align="center">
+						<h:graphicImage library="images" name="loading.gif" />
+					</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Matricula" />
+					<p:inputMask id="taxId" value="#{loginBean.matricula}" size="30" />
+
+					<p:outputLabel value="Senha" />
+					<p:password size="30" value="#{loginBean.senha}" />
+
+					<br />
+
+					<div id="botaoEntrar" align="left">
+						<h:panelGroup>
+							<p:commandButton action="#{loginBean.doLogin()}" value="Entrar" />
+						</h:panelGroup>
+
+
+					</div>
+
+					<h:panelGroup>
+						<p:commandButton value="Gerar Nova Senha" />
+					</h:panelGroup>
+				</h:panelGrid>
+
+
+			</h:form>
+		</div>
+	</p:dialog>
+</h:body>
+
+<footer id="footer-login"> <p:separator
+	style="margin-top: 190px" />
+
+<div align="center">
+	HDServices - Sistema de Gerenciamento de Chamados <br /> <a
+		href="http://www.institutofatima.edu.br/" id="link-rodape">Instituto
+		Superior Nossa Senhora de Fátima</a><br />
+
+	<h:graphicImage id="logo-footer" library="images"
+		name="logo-fatima.png" width="300" height="60" />
+</div>
+</footer>
+
+</html>

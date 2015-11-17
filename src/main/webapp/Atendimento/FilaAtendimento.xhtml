@@ -1,0 +1,97 @@
+<ui:composition template="/WEB-INF/template/LayoutAdministrador.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="Abertura de Chamado"></ui:define>
+	<ui:define name="corpo">
+		<div align="center">
+			<div id="abrirChamado" align="center" class="bordaPadrao">
+
+				<H1>Fila de Atendimento</H1>
+				<BR />
+
+				<p:messages autoUpdate="true" />
+
+				<h:form>
+					<p:toolbar>
+						<p:toolbarGroup style="margin-left: 20px" align="left">
+							<p:commandButton value="Atender" id="botaoAtender"
+								icon="ui-icon-check"
+								action="#{filaAtendimentoBean.adicionaAtendente()}"
+								update="@form" />
+						</p:toolbarGroup>
+					</p:toolbar>
+
+					<p:dataTable id="chamadosTable"
+						value="#{filaAtendimentoBean.chamados}" var="chamado"
+						style="margin-top: 20px" emptyMessage="Nenhum chamado aberto!"
+						rows="10" paginator="true" paginatorAlwaysVisible="false"
+						paginatorPosition="buttom">
+
+						<p:column headerText="" style="text-align: center; width: 50px">
+							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.check}" />
+						</p:column>
+
+						<p:column headerText="Chamado"
+							style="text-align: center; width: 50px">
+							<h:outputText value="#{chamado.numeroChamado}" />
+						</p:column>
+
+						<p:column headerText="Tipo De Solicitação"
+							style="text-align: center; width: 250px">
+							<h:outputText
+								value="#{chamado.catalogo.tipo.descricao} → #{chamado.catalogo.solicitacao}" />
+						</p:column>
+
+						<p:column headerText="Relator"
+							style="text-align: center; width: 250px">
+							<h:outputText value="#{chamado.relator.nome}" />
+						</p:column>
+
+						<p:column headerText="Data/Hora Abertura"
+							style="text-align: center; width: 40px">
+							<h:outputText value="#{chamado.dataAbertura}" />
+						</p:column>
+
+						<p:column style="text-align: center; width: 100px">
+
+							<!-- 			Botão Detalhar				 -->
+							<p:commandButton type="button" icon="ui-icon-info"
+								onclick="PF('chamadoDialog').show();" title="Detalhar"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{filaAtendimentoBean.chamado}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true"
+						showEffect="blind" hideEffect="explode" resizable="false">
+						<p:outputPanel id="chamadoDetalhe" style="text-align:center;">
+							<p:panelGrid columns="2">
+
+								<h:outputText value="Chamado:" />
+								<h:outputText
+									value="#{filaAtendimentoBean.chamado.numeroChamado}" />
+
+								<h:outputText value="Relator" />
+								<h:outputText
+									value="#{filaAtendimentoBean.chamado.relator.nome}" />
+
+								<h:outputText value="Color:" />
+								<h:outputText value="" />
+
+								<h:outputText value="Price" />
+								<h:outputText value="" />
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+				</h:form>
+				<br /> <br /> <br />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

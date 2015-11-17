@@ -1,0 +1,164 @@
+<ui:composition template="/WEB-INF/template/LayoutAdministrador.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="Abertura de Chamado"></ui:define>
+	<ui:define name="corpo">
+		<div align="center">
+			<div id="abrirChamado" align="center" class="bordaPadrao">
+
+				<H1>Visão de Atendimento</H1>
+				<BR />
+
+				<p:messages autoUpdate="true" />
+
+				<h:form>
+
+					<p:dataTable id="chamadosTable"
+						value="#{filaAtendimentoBean.chamados}" var="chamado"
+						style="margin-top: 20px" emptyMessage="Nenhum chamado aberto!"
+						rows="10" paginator="true" paginatorAlwaysVisible="false"
+						paginatorPosition="buttom">
+
+						<p:column headerText="Chamado"
+							style="text-align: center; width: 50px">
+							<h:outputText value="#{chamado.numeroChamado}" />
+						</p:column>
+
+						<p:column headerText="Tipo De Solicitação"
+							style="text-align: center; width: 250px">
+							<h:outputText
+								value="#{chamado.catalogo.tipo.descricao} → #{chamado.catalogo.solicitacao}" />
+						</p:column>
+
+						<p:column headerText="Relator"
+							style="text-align: center; width: 250px">
+							<h:outputText value="#{chamado.relator.nome}" />
+						</p:column>
+
+						<p:column headerText="Data/Hora Abertura"
+							style="text-align: center; width: 40px">
+							<h:outputText value="#{chamado.dataAbertura}" />
+						</p:column>
+
+						<p:column style="text-align: center; width: 100px">
+
+							<!-- 			Botão Detalhar				 -->
+							<p:commandButton type="button" icon="ui-icon-info"
+								onclick="PF('chamadoDialog').show();" title="Detalhar"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{filaAtendimentoBean.chamado}" />
+							</p:commandButton>
+
+							<!-- 			Botão Ação				 -->
+							<p:commandButton type="button" icon="ui-icon-circle-plus"
+								onclick="PF('acaoDialog').show();" title="Registrar Ação"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{filaAtendimentoBean.chamado}" />
+							</p:commandButton>
+
+							<!-- 			Botão Encerrar				 -->
+							<p:commandButton type="button" icon="ui-icon-circle-close"
+								onclick="PF('solucaoDialog').show();" title="Encerrar"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{filaAtendimentoBean.chamado}" />
+							</p:commandButton>
+
+							<!-- 			Botão Emcaminhar				 -->
+							<p:commandButton type="button" icon="ui-icon-circle-arrow-e"
+								onclick="PF('encaminharDialog').show();" title="Encaminhar"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{filaAtendimentoBean.chamado}" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+
+					<!-- 			Dialog Detalhar				 -->
+					<p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true"
+						showEffect="blind" hideEffect="explode" resizable="false">
+						<p:outputPanel id="chamadoDetalhe" style="text-align:center;">
+							<p:panelGrid columns="2">
+
+								<h:outputText value="Chamado:" />
+								<h:outputText
+									value="#{filaAtendimentoBean.chamado.numeroChamado}" />
+
+								<h:outputText value="Relator" />
+								<h:outputText
+									value="#{filaAtendimentoBean.chamado.relator.nome}" />
+
+								<h:outputText value="Color:" />
+								<h:outputText value="" />
+
+								<h:outputText value="Price" />
+								<h:outputText value="" />
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+
+					<!-- 			Dialog Ação				 -->
+					<p:dialog header="Ação" widgetVar="acaoDialog" modal="true"
+						showEffect="blind" hideEffect="explode" resizable="false">
+						<p:outputPanel id="acaoChamado" style="text-align:center;">
+							<p:panelGrid columns="1">
+								<p:inputTextarea id="acao" rows="10" cols="80" maxlength="400"
+									counterTemplate="" autoResize="true" value="" />
+							</p:panelGrid>
+
+							<p:panelGrid columns="2">
+								<p:outputLabel for="esforco" value="Esforço:" />
+								<p:calendar id="esforco" value="#{calendarView.date11}"
+									pattern="HH:mm" timeOnly="true" />
+							</p:panelGrid>
+						</p:outputPanel>
+
+						<p:commandButton value="Salvar" id="botaoSalvar2"
+							icon="ui-icon-check" ajax="false" />
+						<p:button value="Cancelar"
+							outcome="/Atendimento/AcompanharChamados.xhtml" />
+					</p:dialog>
+
+					<!-- 			Dialog Encerrar				 -->
+					<p:dialog header="Solução" widgetVar="solucaoDialog" modal="true"
+						showEffect="blind" hideEffect="explode" resizable="false">
+						<p:outputPanel id="solucaoDialog" style="text-align:center;">
+							<p:panelGrid columns="1">
+								<p:inputTextarea id="solucao" rows="10" cols="80"
+									maxlength="400" counterTemplate="" autoResize="true" value="" />
+							</p:panelGrid>
+							<p:commandButton value="Encerrar" id="botaoEncerrar"
+								icon="ui-icon-check" ajax="false" />
+							<p:button value="Cancelar"
+								outcome="/Atendimento/AcompanharChamados.xhtml" />
+						</p:outputPanel>
+					</p:dialog>
+
+					<!-- 			Dialog Encaminhar				 -->
+					<p:dialog header="Encaminhar" widgetVar="encaminharDialog"
+						modal="true" showEffect="blind" hideEffect="explode"
+						resizable="false">
+						<p:outputPanel id="encaminharDialog" style="text-align:center;">
+							<p:panelGrid columns="1">
+								<p:inputTextarea id="encaminhar" rows="10" cols="80"
+									maxlength="400" counterTemplate="" autoResize="true" value="" />
+							</p:panelGrid>
+							<p:commandButton value="Encaminhar" id="botaoEncaminhar"
+								icon="ui-icon-check" ajax="false" />
+							<p:button value="Cancelar"
+								outcome="/Atendimento/AcompanharChamados.xhtml" />
+						</p:outputPanel>
+					</p:dialog>
+				</h:form>
+				<br /> <br /> <br />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

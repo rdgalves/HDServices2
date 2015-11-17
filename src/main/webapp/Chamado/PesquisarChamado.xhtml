@@ -1,0 +1,94 @@
+<ui:composition template="/WEB-INF/template/LayoutAdministrador.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="Pesquisa de Chamado"></ui:define>
+	<ui:define name="corpo">
+		<div align="center">
+			<div id="abrirChamado" align="center" class="bordaPadrao">
+
+				<H1>Pesquisa de Chamados</H1>
+				<BR />
+
+				<p:ajaxStatus>
+					<f:facet name="start" aling="center">
+						<h:graphicImage library="images" name="loading.gif" />
+					</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+
+				<p:messages autoUpdate="true" />
+
+				<h:form action="">
+					<p:panelGrid columns="2" id="painel">
+
+						<p:outputLabel value="Número" />
+						<h:panelGroup>
+							<p:inputText size="10" maxlength="20" />
+							a
+							<p:inputText size="10" maxlength="20" />
+						</h:panelGroup>
+
+						<p:outputLabel value="Data Abertura" />
+						<h:panelGroup>
+							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy" />
+							a
+							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy" />
+						</h:panelGroup>
+
+						<p:outputLabel value="Relator" />
+						<p:inputText size="60" maxlength="80" />
+						
+						<p:outputLabel value="Atendente" />
+						<p:inputText size="60" maxlength="80" />
+
+						<p:outputLabel value="Tipo" />
+						<p:selectOneMenu value="#{cadastroCatalogoBean.catalogo.tipo}"
+							converter="#{tipoCatalogoConverter}">
+							<f:selectItem itemLabel="" itemValue="" />
+							<f:selectItems value="#{cadastroCatalogoBean.tiposCatalogo}"
+								var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Estado" />
+						<p:selectManyCheckbox>
+							<f:selectItem itemLabel="Aberto" />
+							<f:selectItem itemLabel="Encerrado" />
+						</p:selectManyCheckbox>
+					</p:panelGrid>
+					<br />
+					<p:toolbar>
+						<p:toolbarGroup align="center">
+							<p:commandButton value="Pesquisar" id="botaoPesquisar"
+								icon="ui-icon-search"
+								action="#{pesquisarPessoasBean.pesquisar()}" update="@form" />
+						</p:toolbarGroup>
+					</p:toolbar>
+					<br />
+					<br />
+
+					<p:dataList value="" var="car" type="unordered" itemType="none"
+						paginator="true" rows="10" styleClass="paginated">
+						<f:facet name="header" align="left" styleClass="ui-icon ui-icon-search">
+         				  	Chamados
+    				    </f:facet>
+						<!-- 						<p:commandLink update=":form:carDetail" -->
+						<!-- 							oncomplete="PF('carDialog').show()" title="View Detail" -->
+						<!-- 							styleClass="ui-icon ui-icon-search" -->
+						<!-- 							style="float:left;margin-right:10px"> -->
+						<!-- 							<f:setPropertyActionListener value="teste" target="teste" /> -->
+						<!-- 							<h:outputText value="teste" /> -->
+						<!-- 						</p:commandLink> -->
+						<h:outputText value="Chamados" style="display:inline-block" />
+					</p:dataList>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
