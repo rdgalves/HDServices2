@@ -2,7 +2,6 @@ package br.com.hdservices.controller.webfilter;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,14 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import br.com.hdservices.controller.LoginBean;
+import br.com.hdservices.model.Pessoa;
 
-@WebFilter(urlPatterns = "/hdservices2/*")
+@WebFilter(urlPatterns = "/pages/*")
 public class FiltroLogin implements Filter {
-
-	@Inject
-	private LoginBean loginBean;
 
 	@Override
 	public void destroy() {
@@ -33,12 +30,12 @@ public class FiltroLogin implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String url = req.getRequestURL().toString();
-		if (!url.contains("login")
-				&& !url.contains("erro")
-				&& !url.contains("home")
-				&& (loginBean.getUser() == null || loginBean.getUser()
-						.getMatricula() == null)) {
-			resp.sendRedirect("Login.xhtml");
+
+		HttpSession session = ((HttpServletRequest) request).getSession(true);
+		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
+		
+		if (usuarioLogado == null && (!url.contains("login") || !url.contains("erro"))) {
+			resp.sendRedirect("/hdservices2/Login.xhtml");
 		} else {
 			chain.doFilter(request, response);
 		}

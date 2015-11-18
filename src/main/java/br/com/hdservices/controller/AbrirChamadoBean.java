@@ -100,6 +100,7 @@ public class AbrirChamadoBean implements Serializable {
 
 	public String salvar() {
 		chamado.setSituacao("ABERTO");
+		chamado.setRelator(SessionContext.getInstance().getUsuarioLogado());
 
 		abrirChamadoService.salvar(chamado);
 		limpar();

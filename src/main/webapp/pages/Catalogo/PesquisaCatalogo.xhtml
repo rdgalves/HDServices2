@@ -64,13 +64,12 @@
 						</p:column>
 
 						<p:column style="text-align: center; width: 50px">
-							<p:button outcome="/Catalogo/AlterarCatalogo"
+							<p:button outcome="/pages/Catalogo/AlterarCatalogo"
 								icon="ui-icon-pencil" title="Editar">
 								<f:param name="catalogo" value="#{catalogo.idCatalogo}" />
 							</p:button>
 
-							<p:commandButton icon="ui-icon-trash" title="Excluir"
-								actionListener="#{pesquisarCatalogosBean.excluir(item)}">
+							<p:commandButton icon="ui-icon-trash" title="Excluir">
 								<p:confirm header="Confirmação"
 									message="Deseja mesmo remover o catalogo?" icon="ui-icon-alert" />
 							</p:commandButton>
@@ -78,7 +77,7 @@
 					</p:dataTable>
 
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Sim" type="button"
+						<p:commandButton value="Sim" actionListener="#{pesquisarCatalogosBean.excluir(item)}" ajax="true"
 							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 						<p:commandButton value="Não" type="button"
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />

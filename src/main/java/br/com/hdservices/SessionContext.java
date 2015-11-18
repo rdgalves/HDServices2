@@ -47,7 +47,8 @@ public class SessionContext {
 	}
 
 	public void encerrarSessao() {
-		currentExternalContext().invalidateSession();
+		setAttribute("usuarioLogado", null);
+		currentExternalContext().invalidateSession();		
 	}
 
 	public Object getAttribute(String nome) {

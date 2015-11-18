@@ -1,5 +1,6 @@
 package br.com.hdservices.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.ManagedBean;
@@ -68,13 +69,15 @@ public class LoginBean implements Serializable {
 
 	}
 
-	public String doLogout() {
+	public void doLogout() throws IOException {
 		logger.info("Fazendo logout com usuário "
 				+ SessionContext.getInstance().getUsuarioLogado()
 						.getMatricula());
 		SessionContext.getInstance().encerrarSessao();
 		FacesUtil.addInfoMessage("Logout realizado com sucesso !");
-		return "/Login.xhtml?faces-redirect=true";
+		FacesContext.getCurrentInstance().getExternalContext()
+				.redirect("/hdservices2/Login.xhtml");
+		// return "/Login.xhtml?faces-redirect=true";
 	}
 
 	public void solicitarNovaSenha() {
