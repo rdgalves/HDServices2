@@ -31,11 +31,12 @@ public class FiltroLogin implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String url = req.getRequestURL().toString();
 
+		
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
 		if (usuarioLogado == null && (!url.contains("login") || !url.contains("erro"))) {
-			resp.sendRedirect("/hdservices2/Login.xhtml");
+			resp.sendRedirect("/HDServices/Login.xhtml");
 		} else {
 			chain.doFilter(request, response);
 		}

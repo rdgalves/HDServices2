@@ -18,7 +18,6 @@
 				<H1>Abertura de chamados</H1>
 				<BR />
 
-
 				<p:ajaxStatus>
 					<f:facet name="start" aling="center">
 						<h:graphicImage library="images" name="aguarde.gif" />
@@ -27,8 +26,6 @@
 						<h:outputText value="" />
 					</f:facet>
 				</p:ajaxStatus>
-
-
 
 				<p:messages autoUpdate="true" />
 
@@ -45,7 +42,7 @@
 
 						<p:outputLabel value="Tipo" />
 						<p:selectOneMenu value="#{abrirChamadoBean.tipo}"
-							converter="#{tipoCatalogoConverter}">
+							converter="#{tipoCatalogoConverter}" required="true">
 							<f:selectItem itemLabel="Selecione um Tipo" itemValue="" />
 							<f:selectItems value="#{abrirChamadoBean.tiposCatalogo}"
 								var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
@@ -55,7 +52,8 @@
 
 						<p:outputLabel value="Serviço" for="catalogo" />
 						<p:selectOneMenu id="catalogo"
-							value="#{abrirChamadoBean.chamado.catalogo}" maxlength="60">
+							value="#{abrirChamadoBean.chamado.catalogo}" maxlength="60"
+							required="true">
 							<f:selectItem itemLabel="Selecione um Serviço" itemValue="" />
 							<f:selectItems value="#{abrirChamadoBean.listaCatalogos}"
 								var="catalogo" itemLabel="#{catalogo.solicitacao}"
@@ -65,7 +63,7 @@
 						<p:outputLabel value="Descrição" for="descricao" />
 						<p:inputTextarea id="descricao" rows="10" cols="80"
 							maxlength="400" counterTemplate="" autoResize="true"
-							value="#{abrirChamadoBean.chamado.descricao}" />
+							value="#{abrirChamadoBean.chamado.descricao}" required="true" />
 					</p:panelGrid>
 
 					<br />

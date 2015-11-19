@@ -28,6 +28,7 @@ public class FilaAtendimentoBean implements Serializable {
 	private Chamado chamado;
 	private List<Chamado> chamados;
 	private boolean check;
+	private String[] valoresChamado;
 
 	public FilaAtendimentoBean() {
 
@@ -68,6 +69,14 @@ public class FilaAtendimentoBean implements Serializable {
 
 	public void setChamados(List<Chamado> chamados) {
 		this.chamados = chamados;
+	}
+
+	public String[] getValoresChamado() {
+		return valoresChamado;
+	}
+
+	public void setValoresChamado(String[] valoresChamado) {
+		this.valoresChamado = valoresChamado;
 	}
 
 	private void limpar() {

@@ -19,9 +19,6 @@
 		<exception-handler-factory>
 			br.com.hdservices.util.jsf.JsfExceptionHandlerFactory</exception-handler-factory>
 	</factory>
-<!-- 	<lifecycle> -->
-<!-- 		<phase-listener>com.loffler.copycenter.controller.LoggedInCheck</phase-listener> -->
-<!-- 	</lifecycle> -->
 
 
 

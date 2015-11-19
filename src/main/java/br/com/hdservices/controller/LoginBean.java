@@ -76,7 +76,7 @@ public class LoginBean implements Serializable {
 		SessionContext.getInstance().encerrarSessao();
 		FacesUtil.addInfoMessage("Logout realizado com sucesso !");
 		FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("/hdservices2/Login.xhtml");
+				.redirect("/HDServices/Login.xhtml");
 		// return "/Login.xhtml?faces-redirect=true";
 	}
 

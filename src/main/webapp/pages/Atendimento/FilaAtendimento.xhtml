@@ -35,6 +35,10 @@
 							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.check}" />
 						</p:column>
 
+						<p:column headerText="" style="text-align: center; width: 50px">
+							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.valoresChamado[chamado.numeroChamado]}" />
+						</p:column>
+							
 						<p:column headerText="Chamado"
 							style="text-align: center; width: 50px">
 							<h:outputText value="#{chamado.numeroChamado}" />

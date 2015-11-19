@@ -40,37 +40,4 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
-
-
-
-	<!-- ___________________________teste LOGIN________________________________ -->
-
-<!-- 	<filter> -->
-<!-- 		<filter-name>LoginCheckFilter</filter-name> -->
-<!-- 		<filter-class>br.com.hdservices.filter.LoginCheckFilter</filter-class> -->
-<!-- 		<init-param> -->
-<!-- 			<param-name>loginActionURI</param-name> -->
-<!-- 			<param-value>/HDServices/pages/public/Login.xhtml</param-value> -->
-<!-- 		</init-param> -->
-<!-- 	</filter> -->
-
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>LoginCheckFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-
-<!-- 	<filter> -->
-<!-- 		<filter-name>AdminPaginasFiltro</filter-name> -->
-<!-- 		<filter-class>br.com.hdservices.filter.AdminPaginasFiltro</filter-class> -->
-<!-- 	</filter> -->
-
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>AdminPaginasFiltro</filter-name> -->
-<!-- 		<url-pattern>/pages/protected/admin/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
-
-<!-- 	<filter> -->
-<!-- 		<filter-name>DefaultPessoaPaginasFiltro</filter-name> -->
-<!-- 		<filter-class>br.com.hdservices.filter.DefaultPessoaPaginasFiltro</filter-class> -->
-<!-- 	</filter> -->
 </web-app>

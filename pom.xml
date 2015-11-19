@@ -246,7 +246,8 @@
 			<version>9.4-1200-jdbc41</version>
 			<scope>compile</scope>
 		</dependency>
-
+		
+		<!-- Driver JDBC mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

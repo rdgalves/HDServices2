@@ -14,7 +14,8 @@ public class TipoCatalogo implements Serializable {
 
 	private Integer idTipoCatalogo;
 	private String descricao;
-//	private List<Catalogo> catalogos;
+
+	// private List<Catalogo> catalogos;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +34,6 @@ public class TipoCatalogo implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-//
-//	public List<Catalogo> getCatalogos() {
-//		return catalogos;
-//	}
-//
-//	public void setCatalogos(List<Catalogo> catalogos) {
-//		this.catalogos = catalogos;
-//	}
 
 	@Override
 	public boolean equals(Object obj) {

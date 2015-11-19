@@ -2,6 +2,7 @@ package br.com.hdservices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -99,8 +100,11 @@ public class AbrirChamadoBean implements Serializable {
 	}
 
 	public String salvar() {
+		Calendar dataAbertura = Calendar.getInstance();
+
 		chamado.setSituacao("ABERTO");
 		chamado.setRelator(SessionContext.getInstance().getUsuarioLogado());
+		chamado.setDataAbertura(dataAbertura);
 
 		abrirChamadoService.salvar(chamado);
 		limpar();

@@ -2,6 +2,7 @@ package br.com.hdservices.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Chamado implements Serializable {
 	private String descricao;
 	private Pessoa relator;
 	private Catalogo catalogo;
-	private Date dataAbertura;
+	private Calendar dataAbertura;
 	private Date dataEncerramento;
 	private String avaliacaoAtendimento;
 	private String solucao;
@@ -74,12 +75,12 @@ public class Chamado implements Serializable {
 		this.catalogo = catalogo;
 	}
 
-	public Date getDataAbertura() {
+	public Calendar getDataAbertura() {
 		return dataAbertura;
 	}
 
-	public void setDataAbertura(Date dataAbertura) {
-		this.dataAbertura = dataAbertura;
+	public void setDataAbertura(Calendar dataAbertura2) {
+		this.dataAbertura = dataAbertura2;
 	}
 
 	public Date getDataEncerramento() {
