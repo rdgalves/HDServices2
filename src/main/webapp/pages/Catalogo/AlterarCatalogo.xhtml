@@ -35,7 +35,7 @@
 					<p:panelGrid columns="2" id="painel1"
 						style="width: 90%; margin-top: 20px;"
 						columnClasses="rotulo, campo">
-						
+
 						<p:outputLabel value="Tipo" />
 						<p:selectOneMenu value="#{cadastroCatalogoBean.catalogo.tipo}"
 							converter="#{tipoCatalogoConverter}">
@@ -43,7 +43,7 @@
 							<f:selectItems value="#{cadastroCatalogoBean.tiposCatalogo}"
 								var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						</p:selectOneMenu>
-						
+
 
 						<p:outputLabel value="Solicitação" for="solicitacao" />
 						<p:inputText id="solicitacao" size="60" maxlength="80"
@@ -64,7 +64,8 @@
 							<p:commandButton value="Salvar" id="botaoSalvar"
 								icon="ui-icon-check" action="#{cadastroCatalogoBean.salvar()}"
 								ajax="false" />
-							<p:button value="Cancelar" outcome="/Catalogo/CadastroCatalogo" />
+							<p:button value="Cancelar"
+								outcome="/pages/Catalogo/CadastroCatalogo" />
 						</p:toolbarGroup>
 					</p:toolbar>
 					<br />
@@ -85,8 +86,9 @@
 						<p:commandButton value="Salvar" id="botaoSalvar2"
 							icon="ui-icon-check" action="#{tipoCatalogoBean.salvar()}"
 							ajax="false" />
-						<p:button value="Cancelar" outcome="/Catalogo/PesquisaCatalogo" />
-
+						<p:button value="Cancelar"
+							outcome="/pages/Catalogo/PesquisaCatalogo" />
+							
 					</h:form>
 				</p:dialog>
 			</div>

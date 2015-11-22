@@ -7,10 +7,11 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 import br.com.hdservices.model.Chamado;
+import br.com.hdservices.model.Pessoa;
 import br.com.hdservices.repository.Chamados;
 
 @Model
-public class ListarFilaAtendimentoService implements Serializable {
+public class ListarFilaChamadoService implements Serializable {
 
 	private static final long serialVersionUID = 778463682747479100L;
 
@@ -21,8 +22,12 @@ public class ListarFilaAtendimentoService implements Serializable {
 		return chamados.listarChamadosAbertos();
 	}
 
-	public List<Chamado> listarChamadosPorEspecialista(Chamado especialista) {
-		return chamados.listarChamadosPorEspecialista(especialista);
+	public List<Chamado> listarChamadosPorEspecialista(Pessoa pessoa) {
+		return chamados.listarChamadosPorEspecialista(pessoa);
+	}
+	
+	public List<Chamado> listarChamadosPorRelator(Pessoa pessoa) {
+		return chamados.listarChamadosPorRelator(pessoa);
 	}
 
 }

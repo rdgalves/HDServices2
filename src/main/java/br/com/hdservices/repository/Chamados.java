@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.hdservices.model.Catalogo;
 import br.com.hdservices.model.Chamado;
+import br.com.hdservices.model.Pessoa;
 import br.com.hdservices.repository.filter.ChamadoFilter;
 
 @Stateless
@@ -50,16 +51,25 @@ public class Chamados extends BaseRepository {
 	}
 
 	public List<Chamado> listarChamadosAbertos() {
-		return (List<Chamado>) em.createQuery(
-				"from Chamado where situacao = 'ABERTO' and especialista = null", Chamado.class)
+		return (List<Chamado>) em
+				.createQuery(
+						"from Chamado where situacao = 'ABERTO' and especialista = null",
+						Chamado.class).getResultList();
+	}
+
+	public List<Chamado> listarChamadosPorEspecialista(Pessoa pessoa) {
+		return (List<Chamado>) em
+				.createQuery("from Chamado where especialista = :especialista",
+						Chamado.class).setParameter("especialista", pessoa)
 				.getResultList();
 	}
 
-	public List<Chamado> listarChamadosPorEspecialista(Chamado especialista) {
+	public List<Chamado> listarChamadosPorRelator(Pessoa pessoa) {
 		return (List<Chamado>) em
-				.createQuery("from Chamado where especialista = :especialista",
-						Chamado.class)
-				.setParameter("especialista", especialista).getResultList();
+				.createQuery(
+						"from Chamado where relator = :relator and situacao = 'ABERTO'",
+						Chamado.class).setParameter("relator", pessoa)
+				.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

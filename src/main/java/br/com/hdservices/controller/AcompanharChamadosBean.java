@@ -10,40 +10,23 @@ import javax.inject.Inject;
 
 import br.com.hdservices.SessionContext;
 import br.com.hdservices.model.Chamado;
-import br.com.hdservices.service.AbrirChamadoService;
 import br.com.hdservices.service.ListarFilaChamadoService;
 
 @Model
 @ManagedBean
-public class FilaAtendimentoBean implements Serializable {
+public class AcompanharChamadosBean implements Serializable {
 
 	private static final long serialVersionUID = 520030162362262378L;
 
 	@Inject
-	private ListarFilaChamadoService filaAtendimentoService;
-
-	@Inject
-	private AbrirChamadoService abrirChamadoService;
+	private ListarFilaChamadoService listarFilaChamadoService;
 
 	private Chamado chamado;
 	private List<Chamado> chamados;
 	private boolean check;
 	private String[] valoresChamado;
 
-	public FilaAtendimentoBean() {
-
-	}
-
-	public String adicionaAtendente() {
-		if (check == true) {
-			chamado.setEspecialista(SessionContext.getInstance()
-					.getUsuarioLogado());
-
-			abrirChamadoService.salvar(chamado);
-		} else {
-			return "FilaAtendimento";
-		}
-		return "FilaAtendimento";
+	public AcompanharChamadosBean() {
 
 	}
 
@@ -86,7 +69,9 @@ public class FilaAtendimentoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			this.chamados = filaAtendimentoService.listarChamadosAbertos();
+			this.chamados = listarFilaChamadoService
+					.listarChamadosPorEspecialista(SessionContext.getInstance()
+							.getUsuarioLogado());
 			limpar();
 		} catch (Exception e) {
 			e.printStackTrace();

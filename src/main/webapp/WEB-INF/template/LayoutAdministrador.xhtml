@@ -27,36 +27,45 @@
 		<h:form id="frmMenu">
 			<p:menubar autoDisplay="false">
 				<p:submenu label="Perfil" icon="ui-icon-contact">
-					<p:menuitem value="Dados Pessoais" url="#" />
-					<p:menuitem value="Redefinir Senha" />
+					<p:menuitem value="Dados Pessoais" url="#" icon="ui-icon-info"/>
 				</p:submenu>
 
 				<p:submenu label="Chamado" icon="ui-icon-lightbulb">
-					<p:menuitem value="Novo" url="/pages/Chamado/AbrirChamado.xhtml" />
-					<p:menuitem value="Listar" />
+					<p:menuitem value="Novo" icon="ui-icon-document"
+						url="/pages/Chamado/AbrirChamado.xhtml" />
+					<p:menuitem value="Listar" icon="ui-icon-note" url="/pages/Chamado/ListarChamados.xhtml"/>
 					<p:menuitem value="Pesquisar"
 						url="/pages/Chamado/PesquisarChamado.xhtml" icon="ui-icon-search" />
 				</p:submenu>
 
 				<p:submenu label="Atendimento" icon="ui-icon-person">
-					<p:menuitem value="Fila de atendimento"
+					<p:menuitem value="Fila de atendimento" icon="ui-icon-notice" 
 						url="/pages/Atendimento/FilaAtendimento.xhtml" />
-					<p:menuitem value="Visão de Atendimento"
+					<p:menuitem value="Visão de Atendimento" icon="ui-icon-home"
 						url="/pages/Atendimento/AcompanharChamados.xhtml" />
 				</p:submenu>
 
-				<p:submenu label="Cadastro" icon="ui-icon-clipboard">
-					<p:menuitem value="Usuário"
-						url="/pages/Pessoa/CadastroPessoa.xhtml" />
-					<p:menuitem value="Catalogo"
-						url="/pages/Catalogo/CadastroCatalogo.xhtml" />
-				</p:submenu>
+				<p:submenu label="Administração" icon="ui-icon-gear">
+					<p:submenu label="Cadastro" icon="ui-icon-clipboard">
+						<p:menuitem value="Usuário"
+							url="/pages/Pessoa/CadastroPessoa.xhtml" />
+						<p:menuitem value="Catalogo"
+							url="/pages/Catalogo/CadastroCatalogo.xhtml" />
+					</p:submenu>
+					<p:submenu label="Pesquisar" icon="ui-icon-search">
+						<p:menuitem value="Usuário"
+							url="/pages/Pessoa/PesquisaPessoas.xhtml" />
+						<p:menuitem value="Catalogo"
+							url="/pages/Catalogo/PesquisaCatalogo.xhtml" />
+					</p:submenu>
+					<p:submenu label="Relatórios" icon="ui-icon-document-b">
+						<p:menuitem value="Gerar Relatorio" url="" />
+					</p:submenu>
+					<p:submenu label="Chamado" icon="ui-icon-folder-open">
+						<p:menuitem value="Reabrir Chamado" url="" />
+					</p:submenu>
 
-				<p:submenu label="Buscar" icon="ui-icon-search">
-					<p:menuitem value="Usuário"
-						url="/pages/Pessoa/PesquisaPessoas.xhtml" />
-					<p:menuitem value="Catalogo"
-						url="/pages/Catalogo/PesquisaCatalogo.xhtml" />
+
 				</p:submenu>
 
 				<f:facet name="options">

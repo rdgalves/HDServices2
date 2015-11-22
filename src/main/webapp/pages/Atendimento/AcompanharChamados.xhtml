@@ -18,9 +18,9 @@
 				<h:form>
 
 					<p:dataTable id="chamadosTable"
-						value="#{filaAtendimentoBean.chamados}" var="chamado"
+						value="#{acompanharChamadosBean.chamados}" var="chamado"
 						style="margin-top: 20px" emptyMessage="Nenhum chamado aberto!"
-						rows="10" paginator="true" paginatorAlwaysVisible="false"
+						paginator="true" rows="10" paginatorAlwaysVisible="false"
 						paginatorPosition="buttom">
 
 						<p:column headerText="Chamado"
@@ -29,7 +29,7 @@
 						</p:column>
 
 						<p:column headerText="Tipo De Solicitação"
-							style="text-align: center; width: 250px">
+							style="text-align: center; width: 150px">
 							<h:outputText
 								value="#{chamado.catalogo.tipo.descricao} → #{chamado.catalogo.solicitacao}" />
 						</p:column>
@@ -51,7 +51,7 @@
 								onclick="PF('chamadoDialog').show();" title="Detalhar"
 								update="chamadoDialog">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{filaAtendimentoBean.chamado}" />
+									target="#{acompanharChamadosBean.chamado}" />
 							</p:commandButton>
 
 							<!-- 			Botão Ação				 -->
@@ -59,7 +59,15 @@
 								onclick="PF('acaoDialog').show();" title="Registrar Ação"
 								update="chamadoDialog">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{filaAtendimentoBean.chamado}" />
+									target="#{acompanharChamadosBean.chamado}" />
+							</p:commandButton>
+
+							<!-- 			Botão Detalhar Ações			 -->
+							<p:commandButton type="button" icon="ui-icon-circle-zoomin"
+								onclick="PF('chamadoDialog').show();" title="Detalhar"
+								update="chamadoDialog">
+								<f:setPropertyActionListener value="#{chamado}"
+									target="#{acompanharChamadosBean.chamado}" />
 							</p:commandButton>
 
 							<!-- 			Botão Encerrar				 -->
@@ -67,7 +75,7 @@
 								onclick="PF('solucaoDialog').show();" title="Encerrar"
 								update="chamadoDialog">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{filaAtendimentoBean.chamado}" />
+									target="#{acompanharChamadosBean.chamado}" />
 							</p:commandButton>
 
 							<!-- 			Botão Emcaminhar				 -->
@@ -75,11 +83,15 @@
 								onclick="PF('encaminharDialog').show();" title="Encaminhar"
 								update="chamadoDialog">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{filaAtendimentoBean.chamado}" />
+									target="#{acompanharChamadosBean.chamado}" />
 							</p:commandButton>
 						</p:column>
 
 					</p:dataTable>
+
+
+
+
 
 					<!-- 			Dialog Detalhar				 -->
 					<p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true"

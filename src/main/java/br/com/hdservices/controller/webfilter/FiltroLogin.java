@@ -35,7 +35,7 @@ public class FiltroLogin implements Filter {
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
-		if (usuarioLogado == null && (!url.contains("login") || !url.contains("erro"))) {
+		if (usuarioLogado == null && (!url.contains("login") || !url.contains("erro")) || usuarioLogado.getStatus() == "Inativo") {
 			resp.sendRedirect("/HDServices/Login.xhtml");
 		} else {
 			chain.doFilter(request, response);

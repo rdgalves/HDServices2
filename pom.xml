@@ -240,13 +240,20 @@
 		</dependency>
 
 		<!-- Driver JDBC Postgres -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.postgresql</groupId> -->
+		<!-- <artifactId>postgresql</artifactId> -->
+		<!-- <version>9.4-1200-jdbc41</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.4-1200-jdbc41</version>
-			<scope>compile</scope>
+			<version>9.3-1100-jdbc41</version>
 		</dependency>
-		
+
+
 		<!-- Driver JDBC mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -443,6 +450,5 @@
 				</plugins>
 			</build>
 		</profile>
-
 	</profiles>
 </project>
