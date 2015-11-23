@@ -2,7 +2,8 @@ package br.com.hdservices.model;
 
 public enum EstadoChamado {
 
-	ABERTO("Aberto"), ENCERRADO("Encerra");
+	ABERTO("Aberto"), 
+	ENCERRADO("Encerrado");
 
 	private String descricao;
 

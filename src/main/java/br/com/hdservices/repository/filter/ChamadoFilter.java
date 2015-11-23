@@ -6,6 +6,7 @@ import br.com.hdservices.model.EstadoChamado;
 
 public class ChamadoFilter {
 
+	private int numeroChamado;
 	private int numeroDe;
 	private int numeroAte;
 	private Date dataCriacaoDe;
@@ -14,6 +15,14 @@ public class ChamadoFilter {
 	private String nomeRelator;
 	private String nomeAtendente;
 	private EstadoChamado[] estado;
+
+	public int getNumeroChamado() {
+		return numeroChamado;
+	}
+
+	public void setNumeroChamado(int numeroChamado) {
+		this.numeroChamado = numeroChamado;
+	}
 
 	public int getNumeroDe() {
 		return numeroDe;

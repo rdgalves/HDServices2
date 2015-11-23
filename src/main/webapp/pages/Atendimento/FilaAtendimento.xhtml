@@ -35,9 +35,9 @@
 							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.check}" />
 						</p:column>
 
-						<p:column headerText="" style="text-align: center; width: 50px">
-							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.valoresChamado[chamado.numeroChamado]}" />
-						</p:column>
+<!-- 						<p:column headerText="" style="text-align: center; width: 50px"> -->
+<!-- 							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.valoresChamado[chamado.numeroChamado]}" /> -->
+<!-- 						</p:column> -->
 							
 						<p:column headerText="Chamado"
 							style="text-align: center; width: 50px">
@@ -55,9 +55,18 @@
 							<h:outputText value="#{chamado.relator.nome}" />
 						</p:column>
 
-						<p:column headerText="Data/Hora Abertura"
+						<p:column headerText="Data Abertura"
+							style="text-align: center; width: 60px">
+							<h:outputText value="#{chamado.dataAbertura}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Hora Abertura"
 							style="text-align: center; width: 40px">
-							<h:outputText value="#{chamado.dataAbertura}" />
+							<h:outputText value="#{chamado.dataAbertura}">
+								<f:convertDateTime pattern="HH:mm"/>
+							</h:outputText>
 						</p:column>
 
 						<p:column style="text-align: center; width: 100px">

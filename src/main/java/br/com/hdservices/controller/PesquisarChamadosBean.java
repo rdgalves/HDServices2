@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import br.com.hdservices.model.Chamado;
@@ -15,6 +16,7 @@ import br.com.hdservices.repository.filter.ChamadoFilter;
 
 @Model
 @ManagedBean
+@ViewScoped
 public class PesquisarChamadosBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

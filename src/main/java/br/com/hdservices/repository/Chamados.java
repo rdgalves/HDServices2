@@ -50,6 +50,14 @@ public class Chamados extends BaseRepository {
 		}
 	}
 
+	public List<Chamado> listaPorNumero(Integer numeroChamado) {
+		return (List<Chamado>) em
+				.createQuery(
+						"from Chamado where numeroChamado = :numeroChamado",
+						Chamado.class)
+				.setParameter("numeroChamado", numeroChamado).getResultList();
+	}
+
 	public List<Chamado> listarChamadosAbertos() {
 		return (List<Chamado>) em
 				.createQuery(
@@ -74,49 +82,45 @@ public class Chamados extends BaseRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Chamado> filtrados(ChamadoFilter filtro) {
-		Session session = this.em.unwrap(Session.class);
-
+		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Chamado.class)
-		// fazemos uma associação (join) com cliente e nomeamos como "c"
-				.createAlias("relator", "r")
-				// fazemos uma associação (join) com vendedor e nomeamos como
-				// "v"
-				.createAlias("atendente", "a");
+				.createAlias("relator", "r").createAlias("especialista", "e");
 
-		criteria.add(Restrictions.ge("numeroChamado", filtro.getNumeroDe()));
-		criteria.add(Restrictions.le("numeroChamado", filtro.getNumeroAte()));
+		if (filtro.getNumeroDe() != 0) {
+			criteria.add(Restrictions.eq("numeroChamado",
+					filtro.getNumeroChamado()));
 
-		if (filtro.getDataCriacaoDe() != null) {
-			criteria.add(Restrictions.ge("dataCriacao",
-					filtro.getDataCriacaoDe()));
+		}
+		if (filtro.getNumeroDe() != 0) {
+			// id deve ser maior ou igual (ge = greater or equals) a
+			// filtro.numeroDe
+			criteria.add(Restrictions.ge("numeroChamado", filtro.getNumeroDe()));
 		}
 
-		if (filtro.getDataCriacaoAte() != null) {
-			criteria.add(Restrictions.le("dataCriacao",
-					filtro.getDataCriacaoAte()));
+		if (filtro.getNumeroAte() != 0) {
+			// id deve ser menor ou igual (le = lower or equal) a
+			// filtro.numeroDe
+			criteria.add(Restrictions.le("id", filtro.getNumeroAte()));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeRelator())) {
-			// acessamos o nome do cliente associado ao pedido pelo alias "c",
-			// criado anteriormente
-			criteria.add(Restrictions.ilike("r.nome", filtro.getNomeRelator(),
-					MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("r.relator",
+					filtro.getNomeRelator(), MatchMode.ANYWHERE));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeAtendente())) {
-			// acessamos o nome do vendedor associado ao pedido pelo alias "v",
-			// criado anteriormente
-			criteria.add(Restrictions.ilike("a.nome",
+			criteria.add(Restrictions.ilike("e.especialista",
 					filtro.getNomeAtendente(), MatchMode.ANYWHERE));
 		}
 
-		if (filtro.getEstado() != null && filtro.getEstado().length > 0) {
-			// adicionamos uma restrição "in", passando um array de constantes
-			// da enum StatusPedido
-			criteria.add(Restrictions.in("ssituacao", filtro.getEstado()));
-		}
+		// if (filtro.getStatuses() != null && filtro.getStatuses().length > 0)
+		// {
+		// // adicionamos uma restrição "in", passando um array de constantes da
+		// enum StatusPedido
+		// criteria.add(Restrictions.in("status", filtro.getStatuses()));
+		// }
 
-		return criteria.addOrder(Order.asc("id")).list();
+		return criteria.addOrder(Order.asc("numeroChamado")).list();
+
 	}
-
 }
