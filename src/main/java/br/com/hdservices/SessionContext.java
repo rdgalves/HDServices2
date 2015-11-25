@@ -6,6 +6,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import br.com.hdservices.model.Catalogo;
+import br.com.hdservices.model.Chamado;
 import br.com.hdservices.model.Pessoa;
 
 public class SessionContext {
@@ -23,7 +24,8 @@ public class SessionContext {
 
 	private ExternalContext currentExternalContext() {
 		if (FacesContext.getCurrentInstance() == null) {
-			throw new RuntimeException("O FacesContext não pode ser chamado fora de uma requisição HTTP");
+			throw new RuntimeException(
+					"O FacesContext não pode ser chamado fora de uma requisição HTTP");
 		} else {
 			return FacesContext.getCurrentInstance().getExternalContext();
 		}
@@ -36,7 +38,15 @@ public class SessionContext {
 	public void setUsuarioLogado(Pessoa usuario) {
 		setAttribute("usuarioLogado", usuario);
 	}
-	
+
+	public Chamado getChamadoSelecionado() {
+		return (Chamado) getAttribute("chamadoSelecionado");
+	}
+
+	public void setChamadoSelecionado(Chamado chamadoSelecionado) {
+		setAttribute("chamadoSelecionado", chamadoSelecionado);
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<Catalogo> getCatalogos() {
 		return (List<Catalogo>) getAttribute("catalogosFiltrados");
@@ -48,7 +58,7 @@ public class SessionContext {
 
 	public void encerrarSessao() {
 		setAttribute("usuarioLogado", null);
-		currentExternalContext().invalidateSession();		
+		currentExternalContext().invalidateSession();
 	}
 
 	public Object getAttribute(String nome) {

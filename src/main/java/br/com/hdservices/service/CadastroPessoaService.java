@@ -19,13 +19,17 @@ public class CadastroPessoaService implements Serializable {
 
 	@Transactional
 	public void salvar(Pessoa pessoa) {
-		
+
 		Pessoa pessoaExistente = pessoas.porMatricula(pessoa.getMatricula());
-		
+
 		if (pessoaExistente != null && !pessoaExistente.equals(pessoa)) {
 			throw new NegocioException("Matricula já cadastrada!");
 		}
 		pessoas.salvar(pessoa);
+	}
+
+	public Pessoa buscarPorMatricula(String matricula) {
+		return pessoas.porMatricula(matricula);
 	}
 
 }

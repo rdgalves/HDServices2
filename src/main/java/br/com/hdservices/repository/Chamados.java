@@ -1,5 +1,6 @@
 package br.com.hdservices.repository;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -84,18 +85,19 @@ public class Chamados extends BaseRepository {
 	public List<Chamado> filtrados(ChamadoFilter filtro) {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Chamado.class)
-				.createAlias("relator", "r").createAlias("especialista", "e");
+				.createAlias("relator", "r").createAlias("especialista", "e")
+				.createAlias("catalogo", "c");
 
 		if (filtro.getNumeroDe() != 0) {
-			criteria.add(Restrictions.eq("numeroChamado",
+			criteria.add(Restrictions.ge("numeroChamado",
 					filtro.getNumeroChamado()));
 
 		}
-		if (filtro.getNumeroDe() != 0) {
-			// id deve ser maior ou igual (ge = greater or equals) a
-			// filtro.numeroDe
-			criteria.add(Restrictions.ge("numeroChamado", filtro.getNumeroDe()));
-		}
+		// if (filtro.getNumeroDe() != 0) {
+		// // id deve ser maior ou igual (ge = greater or equals) a
+		// // filtro.numeroDe
+		// criteria.add(Restrictions.ge("numeroChamado", filtro.getNumeroDe()));
+		// }
 
 		if (filtro.getNumeroAte() != 0) {
 			// id deve ser menor ou igual (le = lower or equal) a
@@ -104,13 +106,26 @@ public class Chamados extends BaseRepository {
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeRelator())) {
-			criteria.add(Restrictions.ilike("r.relator",
-					filtro.getNomeRelator(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("r.nome", filtro.getNomeRelator(),
+					MatchMode.ANYWHERE));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeAtendente())) {
-			criteria.add(Restrictions.ilike("e.especialista",
+			criteria.add(Restrictions.ilike("e.nome",
 					filtro.getNomeAtendente(), MatchMode.ANYWHERE));
+		}
+
+		if (filtro.getDataCriacaoDe() != null) {
+			criteria.add(Restrictions.ge("dataAbertura",
+					filtro.getDataCriacaoDe()));
+		}
+
+		if (filtro.getDataCriacaoAte() != null) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(filtro.getDataCriacaoAte());
+			c.add(Calendar.DATE, 1);
+
+			criteria.add(Restrictions.le("dataAbertura", c.getTime()));
 		}
 
 		// if (filtro.getStatuses() != null && filtro.getStatuses().length > 0)
@@ -119,6 +134,12 @@ public class Chamados extends BaseRepository {
 		// enum StatusPedido
 		// criteria.add(Restrictions.in("status", filtro.getStatuses()));
 		// }
+
+		if (filtro.getTipo() != null
+				&& filtro.getTipo().getIdTipoCatalogo() != null) {
+			criteria.add(Restrictions.eq("c.tipo.idTipoCatalogo", filtro
+					.getTipo().getIdTipoCatalogo()));
+		}
 
 		return criteria.addOrder(Order.asc("numeroChamado")).list();
 

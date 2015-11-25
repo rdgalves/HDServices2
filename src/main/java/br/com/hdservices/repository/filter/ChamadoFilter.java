@@ -3,6 +3,7 @@ package br.com.hdservices.repository.filter;
 import java.util.Date;
 
 import br.com.hdservices.model.EstadoChamado;
+import br.com.hdservices.model.TipoCatalogo;
 
 public class ChamadoFilter {
 
@@ -11,7 +12,7 @@ public class ChamadoFilter {
 	private int numeroAte;
 	private Date dataCriacaoDe;
 	private Date dataCriacaoAte;
-	private int tipo;
+	private TipoCatalogo tipo;
 	private String nomeRelator;
 	private String nomeAtendente;
 	private EstadoChamado[] estado;
@@ -80,11 +81,11 @@ public class ChamadoFilter {
 		this.estado = estado;
 	}
 
-	public int getTipo() {
+	public TipoCatalogo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(int tipo) {
+	public void setTipo(TipoCatalogo tipo) {
 		this.tipo = tipo;
 	}
 

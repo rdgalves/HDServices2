@@ -96,6 +96,7 @@ public class AbrirChamadoBean implements Serializable {
 		if (listaCatalogos == null || listaCatalogos.size() == 0) {
 			listaCatalogos = new ArrayList<Catalogo>();
 			listaCatalogos = SessionContext.getInstance().getCatalogos();
+			SessionContext.getInstance().setCatalogos(null);
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
 import br.com.hdservices.SessionContext;
@@ -14,9 +15,11 @@ import br.com.hdservices.model.Acao;
 import br.com.hdservices.model.Chamado;
 import br.com.hdservices.service.ListarFilaChamadoService;
 import br.com.hdservices.service.GerenciarAcaoService;
+import br.com.hdservices.util.jsf.FacesUtil;
 
 @Model
 @ManagedBean(name = "SelecaoView")
+@SessionScoped
 public class AcompanharChamadosBean implements Serializable {
 
 	private static final long serialVersionUID = 520030162362262378L;
@@ -25,15 +28,24 @@ public class AcompanharChamadosBean implements Serializable {
 	private ListarFilaChamadoService listarFilaChamadoService;
 
 	@Inject
-	private GerenciarAcaoService registrarAcaoService;
+	private GerenciarAcaoService acaoService;
 
 	private Acao acao;
 	private Chamado chamado;
 	private List<Chamado> chamados;
 	private Chamado chamadoSelecionado;
+	private List<Acao> acoes;
 
 	public AcompanharChamadosBean() {
 
+	}
+
+	public List<Acao> getAcoes() {
+		return acoes;
+	}
+
+	public void setAcoes(List<Acao> acoes) {
+		this.acoes = acoes;
 	}
 
 	public Acao getAcao() {
@@ -50,6 +62,7 @@ public class AcompanharChamadosBean implements Serializable {
 
 	public void setChamadoSelecionado(Chamado chamadoSelecionado) {
 		this.chamadoSelecionado = chamadoSelecionado;
+		SessionContext.getInstance().setChamadoSelecionado(chamadoSelecionado);
 	}
 
 	public Chamado getChamado() {
@@ -74,14 +87,23 @@ public class AcompanharChamadosBean implements Serializable {
 	}
 
 	public void salvarAcao() {
+
 		Date dataAtual = new Date();
 		acao.setDataRegistro(dataAtual);
 		acao.setEspecialista(SessionContext.getInstance().getUsuarioLogado());
-//		acao.setChamado(chamadoSelecionado);
+		acao.setChamado(SessionContext.getInstance().getChamadoSelecionado());
 
-		registrarAcaoService.salvar(acao);
+		acaoService.salvar(acao);
+
+		FacesUtil.addInfoMessage("Ação Registrada com sucesso");
+		SessionContext.getInstance().setChamadoSelecionado(null);
+		;
 	}
 
+	public void listarPorChamado() {
+		acoes = acaoService.listarAcaoPorChamado(SessionContext.getInstance()
+				.getChamadoSelecionado());
+	}
 
 	@PostConstruct
 	public void init() {
@@ -89,6 +111,7 @@ public class AcompanharChamadosBean implements Serializable {
 			this.chamados = listarFilaChamadoService
 					.listarChamadosPorEspecialista(SessionContext.getInstance()
 							.getUsuarioLogado());
+
 			limpar();
 		} catch (Exception e) {
 			e.printStackTrace();

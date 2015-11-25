@@ -71,23 +71,27 @@
 								oncomplete="PF('chamadoDialog').show()" icon="ui-icon-search"
 								title="Detalhar">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.chamadoSelecionado}" />
+									target="#{acompanharChamadosBean.chamadoSelecionado}">
 							</p:commandButton>
 
 							<!-- 			Botão Ação				 -->
-							<p:commandButton oncomplete="PF('acaoDialog').show();"
-								icon="ui-icon-circle-plus" title="Registrar Ação">
+							<p:commandButton update="@form:acaoChamado"
+								oncomplete="PF('acaoDialog').show();" icon="ui-icon-circle-plus"
+								title="Registrar Ação">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.acao.chamado}" />
+									target="#{acompanharChamadosBean.chamadoSelecionado}" />
 							</p:commandButton>
 
 							<!-- 			Botão Detalhar Ações			 -->
 							<p:commandButton type="button" icon="ui-icon-circle-zoomin"
-								onclick="PF('acaoDialog').show();" title="Detalhar Ações"
-								update="acaoDialog">
+								onclick="PF('detalheAcaoDialog').show();" title="Detalhar Ações"
+								update="acaoDialog"
+								action="#{acompanharChamadosBean.listarPorChamado()}">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.chamado}" />
+									target="#{acompanharChamadosBean.chamadoSelecionado}" />
 							</p:commandButton>
+
+
 
 							<!-- 			Botão Encerrar				 -->
 							<p:commandButton type="button" icon="ui-icon-circle-close"
@@ -184,26 +188,36 @@
 						<!-- 							outcome="/pages/Atendimento/AcompanharChamados.xhtml" /> -->
 					</p:dialog>
 
-					<!-- 					<p:dialog header="Ação" widgetVar="acaoDialog" modal="true" -->
-					<!-- 						showEffect="blind" hideEffect="explode" resizable="false"> -->
-					<!-- 						<p:outputPanel id="acaoChamado" style="text-align:center;"> -->
-					<!-- 							<p:panelGrid columns="1"> -->
-					<!-- 								<p:inputTextarea id="acao" rows="10" cols="80" maxlength="400" -->
-					<!-- 									counterTemplate="" autoResize="true" value="" /> -->
-					<!-- 							</p:panelGrid> -->
+					<!-- 			Dialog Detalhar Acao  			-->
+					<p:dialog id="acaoDetalhe" header="Ações"
+						widgetVar="detalheAcaoDialog" modal="true" showEffect="fade"
+						hideEffect="fade" resizable="false">
 
-					<!-- 							<p:panelGrid columns="2"> -->
-					<!-- 								<p:outputLabel for="esforco" value="Esforço:" /> -->
-					<!-- 								<p:calendar id="esforco" value="#{calendarView.date11}" -->
-					<!-- 									pattern="HH:mm" timeOnly="true" /> -->
-					<!-- 							</p:panelGrid> -->
-					<!-- 						</p:outputPanel> -->
+						<p:dataTable id="acoesTable"
+							value="#{acompanharChamadosBean.acoes}" var="acao"
+							style="margin-top: 20px" emptyMessage="Nenhuma ação registrada!"
+							paginatorAlwaysVisible="true" paginatorPosition="buttom"
+							type="unordered" paginator="true" rows="10"
+							styleClass="paginated" itemType="none">
 
-					<!-- 						<p:commandButton value="Salvar" id="botaoSalvar2" -->
-					<!-- 							icon="ui-icon-check" ajax="false" /> -->
-					<!-- 						<p:button value="Cancelar" -->
-					<!-- 							outcome="/pages/Atendimento/AcompanharChamados.xhtml" /> -->
-					<!-- 					</p:dialog> -->
+							<p:column headerText="Chamado"
+								style="text-align: center; width: 50px">
+								<h:outputText value="#{acao.chamado.descricao}" />
+							</p:column>
+
+							<!-- 							<p:column headerText="Tipo De Solicitação" -->
+							<!-- 								style="text-align: center; width: 150px"> -->
+							<!-- 								<h:outputText -->
+							<!-- 									value="#{chamado.catalogo.tipo.descricao} → #{chamado.catalogo.solicitacao}" /> -->
+							<!-- 							</p:column> -->
+
+							<!-- 							<p:column headerText="Relator" -->
+							<!-- 								style="text-align: center; width: 170px"> -->
+							<!-- 								<h:outputText value="#{chamado.relator.nome}" /> -->
+							<!-- 							</p:column> -->
+						</p:dataTable>
+					</p:dialog>
+
 
 					<!-- 			Dialog Encerrar				 -->
 					<!-- 					<p:dialog header="Solução" widgetVar="solucaoDialog" modal="true" -->

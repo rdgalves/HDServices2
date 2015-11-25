@@ -10,10 +10,10 @@ import javax.inject.Inject;
 import br.com.hdservices.model.Pessoa;
 import br.com.hdservices.service.CadastroPessoaService;
 import br.com.hdservices.util.jsf.FacesUtil;
+import br.com.hdservices.util.security.SecurityUtils;
 
 @Model
 @ManagedBean
-
 public class CadastroPessoaBean implements Serializable {
 
 	private static final long serialVersionUID = -1542160936720433882L;
@@ -37,7 +37,7 @@ public class CadastroPessoaBean implements Serializable {
 	}
 
 	private void limpar() {
-		//pessoa = new Pessoa();
+		// pessoa = new Pessoa();
 		setPessoa(new Pessoa());
 	}
 
@@ -49,10 +49,29 @@ public class CadastroPessoaBean implements Serializable {
 	}
 
 	public String salvar() {
+		verificarSenhaCadastrada();
+		gerarPrimeiraSenha();
 		cadastroPessoaService.salvar(pessoa);
 		limpar();
 		FacesUtil.addInfoMessage("Usuário cadastrado com sucesso!");
 		return "CadastroPessoa";
+	}
+
+	private void verificarSenhaCadastrada() {
+		Pessoa pessoaOriginal = new Pessoa();
+		if (pessoa != null && pessoa.getMatricula() != null) {
+			pessoaOriginal = cadastroPessoaService.buscarPorMatricula(pessoa
+					.getMatricula());
+		}
+		if (pessoaOriginal != null && pessoaOriginal.getSenha() != null) {
+			pessoa.setSenha(pessoaOriginal.getSenha());
+		}
+	}
+
+	private void gerarPrimeiraSenha() {
+		if (pessoa.getSenha() == null) {
+			pessoa.setSenha(SecurityUtils.convertStringToMd5("123456"));
+		}
 	}
 
 	@PostConstruct

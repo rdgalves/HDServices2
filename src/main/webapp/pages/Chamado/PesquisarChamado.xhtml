@@ -30,37 +30,43 @@
 
 						<p:outputLabel value="Número" />
 						<h:panelGroup>
-							<p:inputText size="10" maxlength="20" value="#{pesquisarChamadosBean.filtro.numeroDe}"/>
+							<p:inputText size="10" maxlength="20"
+								value="#{pesquisarChamadosBean.filtro.numeroDe}" />
 							a
-							<p:inputText size="10" maxlength="20" value="#{pesquisarChamadosBean.filtro.numeroAte}"/>
+							<p:inputText size="10" maxlength="20"
+								value="#{pesquisarChamadosBean.filtro.numeroAte}" />
 						</h:panelGroup>
 
 						<p:outputLabel value="Data Abertura" />
 						<h:panelGroup>
-							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy" value="#{pesquisarChamadosBean.filtro.dataCriacaoDe}"/>
+							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy"
+								value="#{pesquisarChamadosBean.filtro.dataCriacaoDe}" />
 							a
-							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy" value="#{pesquisarChamadosBean.filtro.dataCriacaoAte}"/>
+							<p:calendar size="10" maxlength="20" pattern="dd/MM/yyyy"
+								value="#{pesquisarChamadosBean.filtro.dataCriacaoAte}" />
 						</h:panelGroup>
 
 						<p:outputLabel value="Relator" />
-						<p:inputText size="60" maxlength="80" value="#{pesquisarChamadosBean.filtro.nomeRelator}"/>
+						<p:inputText size="60" maxlength="80"
+							value="#{pesquisarChamadosBean.filtro.nomeRelator}" />
 
 						<p:outputLabel value="Atendente" />
-						<p:inputText size="60" maxlength="80" value="#{pesquisarChamadosBean.filtro.nomeAtendente}"/>
+						<p:inputText size="60" maxlength="80"
+							value="#{pesquisarChamadosBean.filtro.nomeAtendente}" />
 
 						<p:outputLabel value="Tipo" />
-						<p:selectOneMenu value="#{cadastroCatalogoBean.catalogo.tipo}"
+						<p:selectOneMenu value="#{pesquisarChamadosBean.filtro.tipo}"
 							converter="#{tipoCatalogoConverter}">
 							<f:selectItem itemLabel="" itemValue="" />
-							<f:selectItems value="#{cadastroCatalogoBean.tiposCatalogo}"
+							<f:selectItems value="#{pesquisarChamadosBean.tiposCatalogo}"
 								var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						</p:selectOneMenu>
 
-<!-- 						<p:outputLabel value="Estado" /> -->
-<!-- 						<p:selectManyCheckbox value="#{pesquisarChamadosBean.filtro.estado}"> -->
-<!-- 							<f:selectItems value="#{pesquisarChamadosBean.estadoChamados}" var="estado" -->
-<!-- 							itemValue="#{estado}" itemLabel="#{estado.descricao}" /> -->
-<!-- 						</p:selectManyCheckbox> -->
+						<!-- 						<p:outputLabel value="Estado" /> -->
+						<!-- 						<p:selectManyCheckbox value="#{pesquisarChamadosBean.filtro.estado}"> -->
+						<!-- 							<f:selectItems value="#{pesquisarChamadosBean.estadoChamados}" var="estado" -->
+						<!-- 							itemValue="#{estado}" itemLabel="#{estado.descricao}" /> -->
+						<!-- 						</p:selectManyCheckbox> -->
 					</p:panelGrid>
 					<br />
 					<p:toolbar>
@@ -98,17 +104,17 @@
 						<p:column headerText="Data Abertura"
 							style="text-align: center; width: 60px">
 							<h:outputText value="#{chamado.dataAbertura}">
-								<f:convertDateTime pattern="dd/MM/yyyy"/>
+								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Hora Abertura"
 							style="text-align: center; width: 40px">
 							<h:outputText value="#{chamado.dataAbertura}">
-								<f:convertDateTime pattern="HH:mm"/>
+								<f:convertDateTime pattern="HH:mm" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Estado"
 							style="text-align: center; width: 50px">
 							<h:outputText value="#{chamado.situacao}" />
@@ -118,8 +124,7 @@
 
 							<!-- 			Botão Detalhar				 -->
 							<p:commandButton type="button" icon="ui-icon-info"
-								title="Detalhar"
-								update="chamadoDialog">
+								title="Detalhar" update="chamadoDialog">
 								<f:setPropertyActionListener value="#{chamado}"
 									target="#{filaAtendimentoBean.chamado}" />
 							</p:commandButton>
