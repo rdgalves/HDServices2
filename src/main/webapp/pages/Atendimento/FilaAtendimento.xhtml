@@ -13,7 +13,7 @@
 				<H1>Fila de Atendimento</H1>
 				<BR />
 
-				<p:messages autoUpdate="true" />
+				<p:growl id="growl" autoUpdate="true" showDetail="false" sticky="true" />
 
 				<h:form>
 					<p:toolbar>
@@ -21,24 +21,30 @@
 							<p:commandButton value="Atender" id="botaoAtender"
 								icon="ui-icon-check"
 								action="#{filaAtendimentoBean.adicionaAtendente()}"
-								update="@form" />
+								update="@form:chamadosTable" />
 						</p:toolbarGroup>
 					</p:toolbar>
 
+					<p:ajaxStatus>
+						<f:facet name="start" align="center">
+							<h:graphicImage library="images" name="loading.gif" />
+						</f:facet>
+						<f:facet name="complete">
+							<h:outputText value="" />
+						</f:facet>
+					</p:ajaxStatus>
+
 					<p:dataTable id="chamadosTable"
-						value="#{filaAtendimentoBean.chamados}" var="chamado"
+						value="#{filaAtendimentoBean.chamados}"
+						selection="#{filaAtendimentoBean.chamadosSelecionados}"
+						rowKey="#{chamado.numeroChamado}" var="chamado"
 						style="margin-top: 20px" emptyMessage="Nenhum chamado aberto!"
 						rows="10" paginator="true" paginatorAlwaysVisible="false"
 						paginatorPosition="buttom">
 
-						<p:column headerText="" style="text-align: center; width: 50px">
-							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.check}" />
-						</p:column>
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
 
-<!-- 						<p:column headerText="" style="text-align: center; width: 50px"> -->
-<!-- 							<p:selectBooleanCheckbox value="#{filaAtendimentoBean.valoresChamado[chamado.numeroChamado]}" /> -->
-<!-- 						</p:column> -->
-							
 						<p:column headerText="Chamado"
 							style="text-align: center; width: 50px">
 							<h:outputText value="#{chamado.numeroChamado}" />
@@ -58,47 +64,71 @@
 						<p:column headerText="Data Abertura"
 							style="text-align: center; width: 60px">
 							<h:outputText value="#{chamado.dataAbertura}">
-								<f:convertDateTime pattern="dd/MM/yyyy"/>
+								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Hora Abertura"
 							style="text-align: center; width: 40px">
 							<h:outputText value="#{chamado.dataAbertura}">
-								<f:convertDateTime pattern="HH:mm"/>
+								<f:convertDateTime pattern="HH:mm" />
 							</h:outputText>
 						</p:column>
 
 						<p:column style="text-align: center; width: 100px">
 
 							<!-- 			Botão Detalhar				 -->
-							<p:commandButton type="button" icon="ui-icon-info"
-								onclick="PF('chamadoDialog').show();" title="Detalhar"
-								update="chamadoDialog">
+							<p:commandButton update="@form:chamadoDetalhe"
+								oncomplete="PF('chamadoDialog').show()" icon="ui-icon-search"
+								title="Detalhar">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{filaAtendimentoBean.chamado}" />
+									target="#{dtSelecaoView.chamadoSelecionado}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 
-					<p:dialog header="Chamado" widgetVar="chamadoDialog" modal="true"
-						showEffect="blind" hideEffect="explode" resizable="false">
-						<p:outputPanel id="chamadoDetalhe" style="text-align:center;">
-							<p:panelGrid columns="2">
+					<p:dialog id="chamadoDetalhe" header="Informações do Chamado"
+						widgetVar="chamadoDialog" modal="true" showEffect="fade"
+						hideEffect="fade" resizable="false">
+						<p:outputPanel style="text-align:center;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty dtSelecaoView.chamadoSelecionado}"
+								columnClasses="label,value">
 
 								<h:outputText value="Chamado:" />
 								<h:outputText
-									value="#{filaAtendimentoBean.chamado.numeroChamado}" />
+									value="#{dtSelecaoView.chamadoSelecionado.numeroChamado}" />
 
-								<h:outputText value="Relator" />
+								<h:outputText value="Relator:" />
 								<h:outputText
-									value="#{filaAtendimentoBean.chamado.relator.nome}" />
+									value="#{dtSelecaoView.chamadoSelecionado.relator.nome}" />
 
-								<h:outputText value="Color:" />
-								<h:outputText value="" />
+								<h:outputText value="Catalogo: " />
+								<h:outputText
+									value="#{dtSelecaoView.chamadoSelecionado.catalogo.tipo.descricao} → #{dtSelecaoView.chamadoSelecionado.catalogo.solicitacao}" />
 
-								<h:outputText value="Price" />
-								<h:outputText value="" />
+								<h:outputText value="Data de Abertura:" />
+								<h:outputText
+									value="#{dtSelecaoView.chamadoSelecionado.dataAbertura}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+
+								<h:outputText value="Hora de Abertura:" />
+								<h:outputText
+									value="#{dtSelecaoView.chamadoSelecionado.dataAbertura}">
+									<f:convertDateTime pattern="HH:mm" />
+								</h:outputText>
+
+								<h:outputText value=" SLA:" />
+								<h:outputText
+									value="#{dtSelecaoView.chamadoSelecionado.catalogo.sla} Horas" /> 
+
+
+								<h:outputText value="Descrição:" />
+								<h:outputText
+									value="#{dtSelecaoView.chamadoSelecionado.descricao}" />
+
 							</p:panelGrid>
 						</p:outputPanel>
 					</p:dialog>

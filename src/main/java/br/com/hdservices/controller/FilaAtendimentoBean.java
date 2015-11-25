@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import br.com.hdservices.SessionContext;
@@ -14,7 +15,8 @@ import br.com.hdservices.service.AbrirChamadoService;
 import br.com.hdservices.service.ListarFilaChamadoService;
 
 @Model
-@ManagedBean
+@ManagedBean(name = "dtSelecaoView")
+@ViewScoped
 public class FilaAtendimentoBean implements Serializable {
 
 	private static final long serialVersionUID = 520030162362262378L;
@@ -27,32 +29,29 @@ public class FilaAtendimentoBean implements Serializable {
 
 	private Chamado chamado;
 	private List<Chamado> chamados;
-	private boolean check;
 	private String[] valoresChamado;
+	private Chamado chamadoSelecionado;
+	private List<Chamado> chamadosSelecionados;
 
 	public FilaAtendimentoBean() {
 
 	}
 
 	public String adicionaAtendente() {
-		if (check == true) {
-			chamado.setEspecialista(SessionContext.getInstance()
+		for (Chamado _chamado : getChamadosSelecionados()) {
+			_chamado.setEspecialista(SessionContext.getInstance()
 					.getUsuarioLogado());
-
-			abrirChamadoService.salvar(chamado);
-		} else {
-			return "FilaAtendimento";
+			abrirChamadoService.salvar(_chamado);
 		}
-		return "FilaAtendimento";
-
+		return "/pages/FilaAtendimento";
 	}
 
-	public boolean isCheck() {
-		return check;
+	public Chamado getChamadoSelecionado() {
+		return chamadoSelecionado;
 	}
 
-	public void setCheck(boolean check) {
-		this.check = check;
+	public void setChamadoSelecionado(Chamado chamadoSelecionado) {
+		this.chamadoSelecionado = chamadoSelecionado;
 	}
 
 	public Chamado getChamado() {
@@ -77,6 +76,14 @@ public class FilaAtendimentoBean implements Serializable {
 
 	public void setValoresChamado(String[] valoresChamado) {
 		this.valoresChamado = valoresChamado;
+	}
+
+	public List<Chamado> getChamadosSelecionados() {
+		return chamadosSelecionados;
+	}
+
+	public void setChamadosSelecionados(List<Chamado> chamadosSelecionados) {
+		this.chamadosSelecionados = chamadosSelecionados;
 	}
 
 	private void limpar() {

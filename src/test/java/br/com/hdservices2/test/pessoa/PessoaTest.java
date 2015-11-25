@@ -35,13 +35,14 @@ public class PessoaTest extends BaseTest {
 		
 		em.getTransaction().begin();
 		
-		pessoa.setMatricula("0001");
+		pessoa.setMatricula("000-0");
 		pessoa.setNome("Rodrigo Alves da Silva");
 		pessoa.setEmail("rdg.alvess@gmail.com");
-		pessoa.setArea("TI");
+		pessoa.setArea("T.I");
 		pessoa.setPerfil("Administrador");
 		pessoa.setSexo("M");
 		pessoa.setStatus("Ativo");
+		pessoa.setSenha("e10adc3949ba59abbe56e057f20f883e");
 		
 		em.persist(pessoa);
 		

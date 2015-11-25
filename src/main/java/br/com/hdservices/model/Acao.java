@@ -1,6 +1,7 @@
 package br.com.hdservices.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,9 @@ public class Acao implements Serializable {
 
 	private Long idAcao;
 	private String descricao;
-	private String dataRegistro;
-	private int tempoEsforco;
-	private Especialista especialista;
+	private Date dataRegistro;
+	private Date tempoEsforco;
+	private Pessoa especialista;
 	private Chamado chamado;
 
 	@Id
@@ -40,12 +41,12 @@ public class Acao implements Serializable {
 	}
 
 	@ManyToOne
-	public Especialista getEspecialista() {
+	public Pessoa getEspecialista() {
 		return especialista;
 	}
 
-	public void setEspecialista(Especialista especialista) {
-		this.especialista = especialista;
+	public void setEspecialista(Pessoa pessoa) {
+		this.especialista = pessoa;
 	}
 
 	public Chamado getChamado() {
@@ -64,20 +65,20 @@ public class Acao implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getDataRegistro() {
+	public Date getDataRegistro() {
 		return dataRegistro;
 	}
 
-	public void setDataRegistro(String dataRegistro) {
-		this.dataRegistro = dataRegistro;
+	public void setDataRegistro(Date dataAtual) {
+		this.dataRegistro = dataAtual;
 	}
 
-	public int getTempoEsforco() {
+	public Date getTempoEsforco() {
 		return tempoEsforco;
 	}
 
-	public void setTempoEsforco(int i) {
-		this.tempoEsforco = i;
+	public void setTempoEsforco(Date tempoEsforco) {
+		this.tempoEsforco = tempoEsforco;
 	}
 
 	@Override

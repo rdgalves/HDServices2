@@ -1,6 +1,7 @@
 package br.com.hdservices.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,11 +10,13 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
 import br.com.hdservices.SessionContext;
+import br.com.hdservices.model.Acao;
 import br.com.hdservices.model.Chamado;
 import br.com.hdservices.service.ListarFilaChamadoService;
+import br.com.hdservices.service.GerenciarAcaoService;
 
 @Model
-@ManagedBean
+@ManagedBean(name = "SelecaoView")
 public class AcompanharChamadosBean implements Serializable {
 
 	private static final long serialVersionUID = 520030162362262378L;
@@ -21,21 +24,32 @@ public class AcompanharChamadosBean implements Serializable {
 	@Inject
 	private ListarFilaChamadoService listarFilaChamadoService;
 
+	@Inject
+	private GerenciarAcaoService registrarAcaoService;
+
+	private Acao acao;
 	private Chamado chamado;
 	private List<Chamado> chamados;
-	private boolean check;
-	private String[] valoresChamado;
+	private Chamado chamadoSelecionado;
 
 	public AcompanharChamadosBean() {
 
 	}
 
-	public boolean isCheck() {
-		return check;
+	public Acao getAcao() {
+		return acao;
 	}
 
-	public void setCheck(boolean check) {
-		this.check = check;
+	public void setAcao(Acao acao) {
+		this.acao = acao;
+	}
+
+	public Chamado getChamadoSelecionado() {
+		return chamadoSelecionado;
+	}
+
+	public void setChamadoSelecionado(Chamado chamadoSelecionado) {
+		this.chamadoSelecionado = chamadoSelecionado;
 	}
 
 	public Chamado getChamado() {
@@ -54,17 +68,20 @@ public class AcompanharChamadosBean implements Serializable {
 		this.chamados = chamados;
 	}
 
-	public String[] getValoresChamado() {
-		return valoresChamado;
-	}
-
-	public void setValoresChamado(String[] valoresChamado) {
-		this.valoresChamado = valoresChamado;
-	}
-
 	private void limpar() {
 		chamado = new Chamado();
+		acao = new Acao();
 	}
+
+	public void salvarAcao() {
+		Date dataAtual = new Date();
+		acao.setDataRegistro(dataAtual);
+		acao.setEspecialista(SessionContext.getInstance().getUsuarioLogado());
+//		acao.setChamado(chamadoSelecionado);
+
+		registrarAcaoService.salvar(acao);
+	}
+
 
 	@PostConstruct
 	public void init() {
