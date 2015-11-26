@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import br.com.hdservices.SessionContext;
 import br.com.hdservices.model.Acao;
 import br.com.hdservices.model.Catalogo;
-import br.com.hdservices.model.Chamado;
 
 @Stateless
 public class Acoes extends BaseRepository {
@@ -32,22 +32,11 @@ public class Acoes extends BaseRepository {
 		}
 	}
 
-	public List<Acao> listarAcaoPorChamado(Chamado numeroChamado) {
+	public List<Acao> listarAcaoPorChamado() {
 		return (List<Acao>) em
-				.createQuery("from Acao where chamado = :numeroChamado",
+				.createQuery("from Acao where numeroChamado = :numeroChamado",
 						Acao.class)
-				.setParameter("numeroChamado", numeroChamado)
+				.setParameter("numeroChamado", SessionContext.getInstance().getChamadoSelecionado())
 				.getResultList();
 	}
-
-	// public Chamado porNumeroChamado(Integer numeroChamado) {
-	// try {
-	// Chamado chamado = em.find(Chamado.class, numeroChamado);
-	// return chamado;
-	// } catch (NoResultException nre) {
-	// return null;
-	// }
-	// }
-	//
-
 }

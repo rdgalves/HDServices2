@@ -3,10 +3,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
 
 	<ui:define name="Abertura de Chamado"></ui:define>
 	<ui:define name="corpo">
+
+
 		<div align="center">
 			<div id="abrirChamado" align="center" class="bordaPadrao">
 
@@ -71,7 +74,7 @@
 								oncomplete="PF('chamadoDialog').show()" icon="ui-icon-search"
 								title="Detalhar">
 								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.chamadoSelecionado}">
+									target="#{acompanharChamadosBean.chamadoSelecionado}" />
 							</p:commandButton>
 
 							<!-- 			Botão Ação				 -->
@@ -83,34 +86,32 @@
 							</p:commandButton>
 
 							<!-- 			Botão Detalhar Ações			 -->
-							<p:commandButton type="button" icon="ui-icon-circle-zoomin"
-								onclick="PF('detalheAcaoDialog').show();" title="Detalhar Ações"
-								update="acaoDialog"
-								action="#{acompanharChamadosBean.listarPorChamado()}">
+							<p:commandButton update="@form" action="#{acompanharChamadosBean.redireciona()}"
+								icon="ui-icon-circle-zoomin" title="Detalhar Ações">
 								<f:setPropertyActionListener value="#{chamado}"
 									target="#{acompanharChamadosBean.chamadoSelecionado}" />
 							</p:commandButton>
 
-
-
-							<!-- 			Botão Encerrar				 -->
-							<p:commandButton type="button" icon="ui-icon-circle-close"
-								onclick="PF('solucaoDialog').show();" title="Encerrar"
-								update="chamadoDialog">
-								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.chamado}" />
-							</p:commandButton>
-
-							<!-- 			Botão Emcaminhar				 -->
-							<p:commandButton type="button" icon="ui-icon-circle-arrow-e"
-								onclick="PF('encaminharDialog').show();" title="Encaminhar"
-								update="chamadoDialog">
-								<f:setPropertyActionListener value="#{chamado}"
-									target="#{acompanharChamadosBean.chamado}" />
-							</p:commandButton>
 						</p:column>
 
 					</p:dataTable>
+
+					<!-- 			Botão Encerrar				 -->
+					<!-- 							<p:commandButton type="button" icon="ui-icon-circle-close" -->
+					<!-- 								onclick="PF('solucaoDialog').show();" title="Encerrar" -->
+					<!-- 								update="chamadoDialog"> -->
+					<!-- 								<f:setPropertyActionListener value="#{chamado}" -->
+					<!-- 									target="#{acompanharChamadosBean.chamado}" /> -->
+					<!-- 							</p:commandButton> -->
+
+					<!-- 			Botão Emcaminhar				 -->
+					<!-- 							<p:commandButton type="button" icon="ui-icon-circle-arrow-e" -->
+					<!-- 								onclick="PF('encaminharDialog').show();" title="Encaminhar" -->
+					<!-- 								update="chamadoDialog"> -->
+					<!-- 								<f:setPropertyActionListener value="#{chamado}" -->
+					<!-- 									target="#{acompanharChamadosBean.chamado}" /> -->
+					<!-- 							</p:commandButton> -->
+
 
 					<!-- 			Dialog Detalhar				 -->
 					<p:dialog id="chamadoDetalhe" header="Informações do Chamado"
@@ -140,7 +141,6 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 
-
 								<h:outputText value="Hora de Abertura:" />
 								<h:outputText
 									value="#{acompanharChamadosBean.chamadoSelecionado.dataAbertura}">
@@ -155,7 +155,6 @@
 								<h:outputText value="Descrição:" />
 								<h:outputText
 									value="#{acompanharChamadosBean.chamadoSelecionado.descricao}" />
-
 							</p:panelGrid>
 						</p:outputPanel>
 					</p:dialog>
@@ -184,39 +183,12 @@
 						<p:commandButton value="Salvar" id="botaoSalvar"
 							action="#{acompanharChamadosBean.salvarAcao()}"
 							icon="ui-icon-check" ajax="false" />
-						<!-- 						<p:button value="Cancelar" -->
-						<!-- 							outcome="/pages/Atendimento/AcompanharChamados.xhtml" /> -->
+						<p:button value="Cancelar"
+							outcome="/pages/Atendimento/AcompanharChamados.xhtml" />
 					</p:dialog>
 
 					<!-- 			Dialog Detalhar Acao  			-->
-					<p:dialog id="acaoDetalhe" header="Ações"
-						widgetVar="detalheAcaoDialog" modal="true" showEffect="fade"
-						hideEffect="fade" resizable="false">
 
-						<p:dataTable id="acoesTable"
-							value="#{acompanharChamadosBean.acoes}" var="acao"
-							style="margin-top: 20px" emptyMessage="Nenhuma ação registrada!"
-							paginatorAlwaysVisible="true" paginatorPosition="buttom"
-							type="unordered" paginator="true" rows="10"
-							styleClass="paginated" itemType="none">
-
-							<p:column headerText="Chamado"
-								style="text-align: center; width: 50px">
-								<h:outputText value="#{acao.chamado.descricao}" />
-							</p:column>
-
-							<!-- 							<p:column headerText="Tipo De Solicitação" -->
-							<!-- 								style="text-align: center; width: 150px"> -->
-							<!-- 								<h:outputText -->
-							<!-- 									value="#{chamado.catalogo.tipo.descricao} → #{chamado.catalogo.solicitacao}" /> -->
-							<!-- 							</p:column> -->
-
-							<!-- 							<p:column headerText="Relator" -->
-							<!-- 								style="text-align: center; width: 170px"> -->
-							<!-- 								<h:outputText value="#{chamado.relator.nome}" /> -->
-							<!-- 							</p:column> -->
-						</p:dataTable>
-					</p:dialog>
 
 
 					<!-- 			Dialog Encerrar				 -->

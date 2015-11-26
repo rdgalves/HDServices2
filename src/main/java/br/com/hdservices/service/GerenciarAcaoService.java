@@ -7,7 +7,6 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 import br.com.hdservices.model.Acao;
-import br.com.hdservices.model.Chamado;
 import br.com.hdservices.repository.Acoes;
 
 @Model
@@ -22,9 +21,9 @@ public class GerenciarAcaoService implements Serializable {
 
 		acoes.salvar(acao);
 	}
-	
-	public List<Acao> listarAcaoPorChamado(Chamado numeroChamado) {
-		return acoes.listarAcaoPorChamado(numeroChamado);
+
+	public List<Acao> listarAcaoPorChamado() {
+		return acoes.listarAcaoPorChamado();
 	}
 
 }

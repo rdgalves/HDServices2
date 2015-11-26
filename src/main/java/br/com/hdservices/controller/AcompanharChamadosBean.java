@@ -1,5 +1,6 @@
 package br.com.hdservices.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import br.com.hdservices.SessionContext;
@@ -34,18 +36,22 @@ public class AcompanharChamadosBean implements Serializable {
 	private Chamado chamado;
 	private List<Chamado> chamados;
 	private Chamado chamadoSelecionado;
-	private List<Acao> acoes;
 
 	public AcompanharChamadosBean() {
 
 	}
 
-	public List<Acao> getAcoes() {
-		return acoes;
-	}
+	public void redireciona() {
+		try {
 
-	public void setAcoes(List<Acao> acoes) {
-		this.acoes = acoes;
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect("/HDServices/pages/Atendimento/ListarAcoes.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Acao getAcao() {
@@ -98,11 +104,6 @@ public class AcompanharChamadosBean implements Serializable {
 		FacesUtil.addInfoMessage("Ação Registrada com sucesso");
 		SessionContext.getInstance().setChamadoSelecionado(null);
 		;
-	}
-
-	public void listarPorChamado() {
-		acoes = acaoService.listarAcaoPorChamado(SessionContext.getInstance()
-				.getChamadoSelecionado());
 	}
 
 	@PostConstruct

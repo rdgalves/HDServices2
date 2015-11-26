@@ -128,13 +128,6 @@ public class Chamados extends BaseRepository {
 			criteria.add(Restrictions.le("dataAbertura", c.getTime()));
 		}
 
-		// if (filtro.getStatuses() != null && filtro.getStatuses().length > 0)
-		// {
-		// // adicionamos uma restrição "in", passando um array de constantes da
-		// enum StatusPedido
-		// criteria.add(Restrictions.in("status", filtro.getStatuses()));
-		// }
-
 		if (filtro.getTipo() != null
 				&& filtro.getTipo().getIdTipoCatalogo() != null) {
 			criteria.add(Restrictions.eq("c.tipo.idTipoCatalogo", filtro
